@@ -1,21 +1,18 @@
-# 人体姿态识别与跟踪程序
+# Human Pose Recognition and Tracking
 
-这是一个基于 TensorFlow 的人体姿态识别项目，结合 YOLOv3、Deep SORT 和
-tf-pose-estimation，实现图片、视频及摄像头画面中的人体检测、姿态估计与目标跟踪。
+This is a TensorFlow-based human pose recognition project that integrates YOLOv3, Deep SORT, and tf-pose-estimation to perform human detection, pose estimation, and object tracking on images, videos, and live camera feeds.
 
-## 主要功能
+## Key Features
 
-- 人体关键点与骨架姿态估计
-- YOLOv3 人体目标检测
-- Deep SORT 多目标跟踪
-- 图片、视频和实时摄像头输入
-- 基于 Tkinter 的桌面界面及 ROS 相关示例
+- Human keypoint and skeletal pose estimation
+- YOLOv3 human object detection
+- Deep SORT multi-object tracking
+- Support for image, video, and real-time camera inputs
+- Tkinter-based desktop interface and ROS-related examples
 
-## 运行环境
+## Runtime Environment
 
-本项目是基于较早版本的 Python/TensorFlow 开发的存档项目。原始开发环境使用
-Python 3.6，依赖列表见 `requirements.txt`。根据入口程序的不同，还可能需要安装
-TensorFlow、OpenCV、Pillow、PyAudio 和 Tkinter。
+This project is an archived project developed using earlier versions of Python and TensorFlow. The original development environment utilized Python 3.6; please refer to `requirements.txt` for the list of dependencies. Depending on the specific entry point used, additional installations of TensorFlow, OpenCV, Pillow, PyAudio, and Tkinter may also be required.
 
 ```bash
 python -m venv .venv
@@ -27,7 +24,7 @@ pip install -r requirements.txt
 tf-pose-estimation 文档。项目中的大型 YOLO/CMU 模型权重不会提交到 GitHub，
 请按模型目录中的下载脚本或你自己的模型来源放置权重文件。
 
-## 常用入口
+## Quick start
 
 ```bash
 # 单张图片姿态估计
