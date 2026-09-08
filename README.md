@@ -10,6 +10,43 @@ This is a TensorFlow-based human pose recognition project that integrates YOLOv3
 - Support for image, video, and real-time camera inputs
 - Tkinter-based desktop interface and ROS-related examples
 
+
+### 方法概览
+
+1. 从图像中提取人体关键点，并将第 $k$ 个关键点表示为
+   $p_k=(x_k,y_k)$。
+2. 按人体区域将关键点划分为 9 个集合：全身躯干、上半身、下半身、左右手臂、
+   左右腿以及左右大腿。
+3. 对每个集合提取几何统计特征。论文采用 Graham Scan 计算凸包，并在凸包上
+   寻找距离最远的两个关键点；也可使用最小外接矩形的旋转角度作为特征。
+4. 使用最远点连线与水平方向夹角的正切值
+   $\tan\alpha_n=(y_i-y_j)/(x_i-x_j)$，结合分层规则依次判断肢体与躯干姿态。
+
+```text
+人体图像 → 关键点提取 → 关键点集合划分 → 几何统计特征 → 分层语义判断
+```
+
+论文给出的分层规则首先判断抬臂和踢腿，再判断弯腰、站立、蹲坐与平躺；这种
+集合化处理使方法在部分关键点不可见时仍可利用其余关键点完成判断。
+
+### Result
+
+| 数据集 | 场景与样本 | 评价指标 | 论文报告结果 |
+| --- | --- | --- | ---: |
+| IFD | 直立、蹲坐；300 张图像 | Accuracy | 90.8% |
+| MPII | 多人及复杂姿态；200 张图像 | Accuracy | 77.2% |
+| PASCAL VOC 2010 | 复杂背景；250 张图像 | Average Accuracy | 77.1% |
+
+以上数值来自论文中的实验，不代表本仓库在当前软硬件环境下已经完成同样的复现。
+
+### 与本仓库实现的关系
+
+论文描述的是基于 16 个关键点和 9 个关键点集合的通用方法。本仓库的
+`run_webcam.py`、`界面.py` 等入口使用 tf-pose-estimation 的 18 关键点输出，
+并通过关键点斜率、位置关系和 OpenCV 最小外接矩形（`cv2.minAreaRect`）实现
+站立、蹲坐、弯腰、平躺、抬臂和踢腿等实时判定。因此，仓库代码是对几何统计
+判定思想的工程化实现，但数据格式、集合划分和部分阈值并非论文算法的逐行复刻。
+
 ## Runtime Environment
 
 This project is an archived project developed using earlier versions of Python and TensorFlow. The original development environment utilized Python 3.6; please refer to `requirements.txt` for the list of dependencies. Depending on the specific entry point used, additional installations of TensorFlow, OpenCV, Pillow, PyAudio, and Tkinter may also be required.
@@ -46,8 +83,6 @@ python 界面.py
 ---
 
 ## tf-pose-estimation 原始说明
-
-'Openpose', human pose estimation algorithm, have been implemented using Tensorflow. It also provides several variants that have some changes to the network structure for **real-time processing on the CPU or low-power embedded devices.**
 
 'Openpose', human pose estimation algorithm, have been implemented using Tensorflow. It also provides several variants that have some changes to the network structure for **real-time processing on the CPU or low-power embedded devices.**
 
