@@ -11,7 +11,7 @@ This is a TensorFlow-based human pose recognition project that integrates YOLOv3
 - Tkinter-based desktop interface and ROS-related examples
 
 
-### 方法概览
+###   方法概览
 
 1. 从图像中提取人体关键点，并将第 $k$ 个关键点表示为
    $p_k=(x_k,y_k)$。
@@ -39,13 +39,6 @@ This is a TensorFlow-based human pose recognition project that integrates YOLOv3
 
 以上数值来自论文中的实验，不代表本仓库在当前软硬件环境下已经完成同样的复现。
 
-### 与本仓库实现的关系
-
-论文描述的是基于 16 个关键点和 9 个关键点集合的通用方法。本仓库的
-`run_webcam.py`、`界面.py` 等入口使用 tf-pose-estimation 的 18 关键点输出，
-并通过关键点斜率、位置关系和 OpenCV 最小外接矩形（`cv2.minAreaRect`）实现
-站立、蹲坐、弯腰、平躺、抬臂和踢腿等实时判定。因此，仓库代码是对几何统计
-判定思想的工程化实现，但数据格式、集合划分和部分阈值并非论文算法的逐行复刻。
 
 ## Runtime Environment
 
